@@ -2,8 +2,7 @@
 
 read -r -d '' BODY <<EOF
 {
-	"value": "moo",
-	"message": "moo"
+	"status": "healthy"
 }
 EOF
 echo ${BODY} | jq --tab
@@ -11,7 +10,7 @@ echo ${BODY} | jq --tab
 RESPONSE=$(curl -s -X POST \
 	-H "Content-Type: application/json" \
 	-d "${BODY}" \
-http://localhost:4040)
+http://localhost:4040/status)
 
 echo "${RESPONSE}" | jq --tab .
 

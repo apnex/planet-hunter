@@ -8,7 +8,7 @@ const port = 4040;
 // start server
 app.listen(port, function() {
 	console.log('Express server listening on port ' + port);
-	load(); // start loop
+	//load(); // start loop
 });
 
 // Returns a Promise that resolves after "ms" Milliseconds
