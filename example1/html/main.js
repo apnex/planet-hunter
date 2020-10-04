@@ -39,12 +39,11 @@ async function renderTable(data) {
 		let div1 = document.createElement("div"); // create new div
 
 		// set visual properties
-		div1.className = "status";
 		div1.innerText = item.status;
 		if(item.status == 'healthy') {
-			div1.style.backgroundColor = colours['mGreen-500'];
+			div1.className = "healthy"; // css class
 		} else {
-			div1.style.backgroundColor = colours['mRed-300'];
+			div1.className = "broken"; // css class
 		}
 
 		// attach to table
