@@ -1,0 +1,17 @@
+.status {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	background: #73AD21;
+	padding: 20px;
+	width: 400px;
+	height: 80px;
+	font-size: 40px;
+	font-family: "Courier New", Courier, monospace;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
