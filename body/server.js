@@ -38,7 +38,7 @@ async function load() { // We need to wrap the loop into an async function for t
 }
 
 async function setStatus(json) {
-	const {body} = await got.post('http://localhost:4040/status', {
+	const {body} = await got.post('http://localhost:4040/probes', {
 		json,
 		responseType: 'json'
 	});
@@ -46,7 +46,7 @@ async function setStatus(json) {
 }
 
 async function getStatus() {
-	const {body} = await got.get('http://localhost:4040/status', {
+	const {body} = await got.get('http://localhost:4040/probes', {
 		responseType: 'json'
 	});
 	return body;

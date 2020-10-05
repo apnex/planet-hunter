@@ -8,13 +8,20 @@ function sleep(ms) {
 }
 
 async function start() {
+	var data = [];
 	while(1) { // main loop
 		// get status
 		checkStatus().then(async(body) => {
 			// render table
-			console.log("success body returned");
+			data = body;
 			await renderTable(body);
-		}).catch((err) => {});
+		}).catch(async(err) => {
+			console.log(JSON.stringify(data, null, "\t"));
+			data.items.forEach((item) => {
+				item.status = 'unknown';
+			});
+			await renderTable(data);
+		});
 
 		// sleep
 		await sleep(2000);
@@ -22,11 +29,11 @@ async function start() {
 }
 
 async function checkStatus() {
-	return await ky.get('http://localhost:4040/status').json();
+	return await ky.get('http://localhost:4040/probes').json();
 }
 
 async function renderTable(data) {
-	let table = document.getElementById("status");
+	let table = document.getElementById("probes");
 
 	// remove all rows
 	table.innerHTML = "";
@@ -40,10 +47,16 @@ async function renderTable(data) {
 
 		// set visual properties
 		div1.innerText = item.status;
-		if(item.status == 'healthy') {
-			div1.className = "healthy"; // css class
-		} else {
-			div1.className = "broken"; // css class
+		switch(item.status) {
+			case('healthy'):
+				div1.className = 'healthy';
+				break;
+			case('broken'):
+				div1.className = 'broken';
+				break;
+			default:
+				div1.className = 'unknown';
+				break;
 		}
 
 		// attach to table
@@ -56,4 +69,3 @@ async function renderTable(data) {
 }
 
 start();
-

@@ -31,4 +31,30 @@ A probe is launched to each body to return telemetry
 ## probe
 - Is a rest API
 
+## probe registration
+- probe launched
 
+probe
+- register with hub (POST)
+POST /join
+{
+	name: "web"
+	endpoint: "http://localhost:4041/health"
+}
+
+hub
+- ack probe
+- lodge healthcheck
+- commence healthcheck endpoint
+
+Add a probe
+/probes
+
+Remove a probe
+/probes/name
+
+List probes
+/probes
+
+Get probes
+/probes/web

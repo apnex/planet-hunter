@@ -17,7 +17,7 @@ driver() {
 		;;
 		*) # validate inputs here before run?
 			if [[ -n "${APIHOST}" ]]; then
-				run
+				run "${@}" | jq --tab .
 			fi
 		;;
 	esac

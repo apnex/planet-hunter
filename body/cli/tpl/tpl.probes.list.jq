@@ -1,5 +1,6 @@
 .items? |
 if (length > 0) then map({
-	"id": .id,
+	"name": .name,
+	"endpoint": .endpoint,
 	"status": .status
 }) else empty end
