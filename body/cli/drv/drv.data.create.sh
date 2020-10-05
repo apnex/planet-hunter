@@ -5,30 +5,29 @@ fi
 source ${WORKDIR}/mod.driver
 
 # inputs
-APIHOST="http://localhost:4040"
-ITEM="probes"
+APIHOST="http://localhost:4041"
+ITEM="data"
 INPUTS=()
 
 # makeBody
 makeBody() {
-	local NAME="${1}"
-	local ENDPOINT="${2}"
-	local STATUS="${3}"
 	read -r -d "" BODY <<-EOF
 	{
-		"name": "${NAME}",
-		"endpoint": "${ENDPOINT}",
-		"status": "${STATUS}"
+		"key": "mercury",
+		"value": {
+			"index": 1,
+			"info": "First planet from the sun"
+		}
 	}
 	EOF
 	printf "${BODY}"
 }
 
 # apiGet
-apiPut() {
+apiPost() {
 	local URL="${1}"
 	local BODY="${2}"
-	local RESPONSE=$(curl -s -X PUT \
+	local RESPONSE=$(curl -s -X POST \
 		-H "Content-Type: application/json" \
 		-d "${BODY}" \
 	"${URL}")
@@ -37,15 +36,13 @@ apiPut() {
 # run
 run() {
 	URL="${APIHOST}"
-	if [[ -n "${1}" && -n "${2}" && -n "${3}" ]]; then
-		local BODY=$(makeBody "${1}" "${2}" "${3}")
-		URL+="/${ITEM}/${1}"
+	URL+="/${ITEM}"
+	local BODY=$(makeBody)
+	if [[ -n "${URL}" ]]; then
 		printf "[$(cgreen "INFO")]: api [$(cgreen "list")] ${ITEM} [$(cgreen "${URL}")]... " 1>&2
 		echo "[$(ccyan "DONE")]" 1>&2
 		echo "${BODY}"
-		apiPut "${URL}" "${BODY}"
-	else
-		echo "[$(corange "ERROR")]: command usage: [$(ccyan " probes.put <probe.name> <probe.endpoint> <probe.status> ")] " 1>&2
+		apiPost "${URL}" "${BODY}"
 	fi
 }
 
