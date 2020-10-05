@@ -25,6 +25,9 @@ td {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-style: solid;
+	border-color: #81c784;
+	border-width: 3px;
 	border-radius: 10px;
 	background: #66bb6a;
 	padding: 20px;
@@ -38,8 +41,27 @@ td {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-style: solid;
+	border-color: #ef9a9a;
+	border-width: 3px;
 	border-radius: 10px;
-	background: #ef9a9a;
+	background: #e57373;
+	padding: 20px;
+	width: 400px;
+	height: 80px;
+	font-size: 40px;
+	font-family: "Courier New", Courier, monospace;
+}
+
+.unknown {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-style: solid;
+	border-color: #e0e0e0;
+	border-width: 3px;
+	border-radius: 10px;
+	background: #bdbdbd;
 	padding: 20px;
 	width: 400px;
 	height: 80px;

@@ -1,0 +1,60 @@
+## an application as a modular heirarchical distributed system
+## each pod identical instantiation, with embedded rest API
+## each body has am embedded web server
+## highly visual based on two.js and SVG
+## stupidly lightweight <50MB containers
+## need to support a 100 body system
+
+Each body (sun, planet, moon etc..) is instantiated as a kubernetes pod
+A body is anchored to a parent body
+-- i.e Sun is anchored to System
+-- Earth is anchored to Sun
+-- Moon is anchored to Earth
+
+A probe is launched to each body to return telemetry
+-- A probe provides detailed visibility of orbited body, and its children
+-- i.e the 
+
+## VISUAL
+- Simple
+- Topological
+- Dark theme
+
+## STRUCTURE
+- Nested
+- Recursive
+- Health Checks
+
+## body
+- Is a rest API
+
+## probe
+- Is a rest API
+
+## probe registration
+- probe launched
+
+probe
+- register with hub (POST)
+POST /join
+{
+	name: "web"
+	endpoint: "http://localhost:4041/health"
+}
+
+hub
+- ack probe
+- lodge healthcheck
+- commence healthcheck endpoint
+
+Add a probe
+/probes
+
+Remove a probe
+/probes/name
+
+List probes
+/probes
+
+Get probes
+/probes/web
