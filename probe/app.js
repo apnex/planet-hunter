@@ -70,7 +70,7 @@ app.delete('/probes/:probeName', (req, res) => {
 });
 
 app.get('/favicon.ico', (req, res) => {
-	res.status(200);
+	res.status(200).send({});
 });
 
 // Default every route except the above to serve the index.html

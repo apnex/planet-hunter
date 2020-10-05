@@ -37,13 +37,15 @@ apiPut() {
 # run
 run() {
 	URL="${APIHOST}"
-	local BODY=$(makeBody "${1}" "${2}" "${3}")
-	if [[ -n "${URL}" ]]; then
+	if [[ -n "${1}" && -n "${2}" && -n "${3}" ]]; then
+		local BODY=$(makeBody "${1}" "${2}" "${3}")
 		URL+="/${ITEM}/${1}"
 		printf "[$(cgreen "INFO")]: api [$(cgreen "list")] ${ITEM} [$(cgreen "${URL}")]... " 1>&2
 		echo "[$(ccyan "DONE")]" 1>&2
 		echo "${BODY}"
 		apiPut "${URL}" "${BODY}"
+	else
+		echo "[$(corange "ERROR")]: command usage: [$(ccyan " probes.put <probe.name> <probe.endpoint> <probe.status> ")] " 1>&2
 	fi
 }
 

@@ -4,5 +4,4 @@ if [[ $0 =~ ^(.*)/[^/]+$ ]]; then
 fi
 source ${WORKDIR}/mod.command
 
-${WORKDIR}/drv/drv.${TYPE}.sh "$@"
-
+${WORKDIR}/drv/drv.${TYPE}.sh "${@}"
