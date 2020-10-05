@@ -2,7 +2,7 @@
 'use strict';
 
 const app = require('./app');
-const port = 4041;
+const port = 4042;
 
 // start server
 app.listen(port, () => {

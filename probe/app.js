@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // join a probe
 app.post('/probes', (req, res) => {
-	console.log('[POST] /join');
+	console.log('[ POST ] /join');
 	console.log(JSON.stringify(req.body, null, "\t"));
 	let name = req.body.name;
 	data.forEach((item) => {
@@ -29,7 +29,7 @@ app.post('/probes', (req, res) => {
 });
 
 app.get('/probes', (req, res) => {
-	console.log('[GET] /status');
+	console.log('[ GET ] /probes');
 	let items = {
 		items: data
 	};
@@ -38,7 +38,7 @@ app.get('/probes', (req, res) => {
 
 app.get('/probes/:probeName', (req, res) => {
 	let probeName = req.params.probeName;
-	console.log('[GET] /probes/' + probeName);
+	console.log('[ GET ] /probes/' + probeName);
 	let probe = data.filter((item) => {
 		return (item.name == probeName);
 	})[0];
@@ -47,7 +47,7 @@ app.get('/probes/:probeName', (req, res) => {
 
 app.put('/probes/:probeName', (req, res) => {
 	let probeName = req.params.probeName;
-	console.log('[PUT] /probes/' + probeName);
+	console.log('[ PUT ] /probes/' + probeName);
 	data.forEach((item) => {
 		if(item.name == probeName) {
 			item = Object.assign(item, req.body);
@@ -60,7 +60,7 @@ app.put('/probes/:probeName', (req, res) => {
 
 app.delete('/probes/:probeName', (req, res) => {
 	let probeName = req.params.probeName;
-	console.log('[DELETE] /probes/' + probeName);
+	console.log('[ DELETE ] /probes/' + probeName);
 	data = data.filter((item) => {
 		return (item.name != probeName);
 	}); // remove

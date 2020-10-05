@@ -36,12 +36,14 @@ apiPost() {
 run() {
 	URL="${APIHOST}"
 	URL+="/${ITEM}"
-	local BODY=$(makeBody "${1}" "${2}")
-	if [[ -n "${URL}" ]]; then
+	if [[ -n "${1}" && -n "${2}" ]]; then
+		local BODY=$(makeBody "${1}" "${2}")
 		printf "[$(cgreen "INFO")]: api [$(cgreen "list")] ${ITEM} [$(cgreen "${URL}")]... " 1>&2
 		echo "[$(ccyan "DONE")]" 1>&2
 		echo "${BODY}"
 		apiPost "${URL}" "${BODY}"
+	else
+		echo "[$(corange "ERROR")]: command usage: [$(ccyan " probes.join <probe.name> <probe.endpoint> ")] " 1>&2
 	fi
 }
 
