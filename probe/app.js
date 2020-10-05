@@ -23,7 +23,7 @@ app.post('/probes', (req, res) => {
 	data.push({
 		name: req.body.name,
 		endpoint: req.body.endpoint,
-		status: "healthy"
+		status: "unknown"
 	});
 	res.status(200).send(data);
 });
