@@ -1,0 +1,9 @@
+body {
+	background: #181818;
+}
+
+#earth {
+	stroke: #81d4fa;
+	stroke-width: 8;
+	fill: #03a9f4;
+}
