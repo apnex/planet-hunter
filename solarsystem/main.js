@@ -11,6 +11,19 @@ var center = {
 	y: two.height / 2
 };
 
+// groups
+var gSystem = two.makeGroup();
+var gOrbits = two.makeGroup();
+var gPlanets = two.makeGroup();
+
+// return angle increment
+function getAngle(seconds, frameCount) {
+	let frameTotal = 60 * seconds;
+	let frameCurrent = frameCount % frameTotal;
+	return (360 / frameTotal) * frameCurrent;
+}
+
+// calc position on orbit
 function getPosition(angle, orbit) {
 	return {
 		x: Math.cos(angle * Math.PI / 180) * orbit,
@@ -18,82 +31,105 @@ function getPosition(angle, orbit) {
 	};
 }
 
-var earthAngle = 0;
-var moonAngle  = 0;
-var distance   = 60;
-var radius     = 20;
-var padding    = 0;
-
-// groups
-var system	= two.makeGroup();
-var orbits	= two.makeGroup();
-var planets	= two.makeGroup();
-
-// sun
-var sun = two.makeCircle(0, 0, 70);
-system.add(sun);
-
-// orbit - earth
-var earthOrbitRadius = 200;
-var earthOrbit = two.makeCircle(0, 0, earthOrbitRadius);
-earthOrbit.noFill();
-earthOrbit.linewidth = 4;
-earthOrbit.stroke = "#ccc";
-orbits.add(earthOrbit);
-
-// planet - earth
-var pos = getPosition(0, earthOrbitRadius);
-var earthRadius = 40;
-var earth = two.makeCircle(pos.x, pos.y, earthRadius);
-planets.add(earth);
-
-// initial luna placement
-var moonOrbit = two.makeCircle(earth.translation.x, earth.translation.y, earthRadius + distance);
-moonOrbit.noFill();
-moonOrbit.linewidth = 4;
-moonOrbit.stroke = "#ccc";
-orbits.add(moonOrbit);
-
-var moonRadius = 10;
-var pos = getPosition(moonAngle, earthRadius + distance);
-var moon = two.makeCircle(earth.translation.x + pos.x, earth.translation.y + pos.y, moonRadius);
-planets.add(moon);
-orbits.visible = true;
-
-function getAngle(seconds, frameCount) {
-	let frameTotal = 60 * seconds;
-	let frameCurrent = frameCount % frameTotal;
-	return (360 / frameTotal) * frameCurrent;
+// scale down body radius as a square root against smallest body
+function getRadius(radius, baseRadius, scale = 4) {
+	return Math.sqrt(radius / baseRadius) * scale;
 }
 
+// scale down body orbit period as a square root against fastest body
+function getOrbit(orbit, baseOrbit, scale = 60) {
+	return Math.sqrt(orbit / baseOrbit) * scale;
+}
+
+// find smallest body radius
+const radiusArr = planets.map((body) => body.radius);
+const baseRadius = Math.min(...radiusArr);
+
+// find fastest body orbit
+const orbitArr = planets.map((body) => body.orbit);
+const baseOrbit = Math.min(...orbitArr);
+
+// make sun
+var item = {
+	"name": "sun",
+	"radius": 695508,
+	"distance": 0,
+	"orbit": 0
+};
+var sunRadius = getRadius(item.radius, baseRadius);
+var sun = two.makeCircle(0, 0, getRadius(item.radius, baseRadius));
+
+// testing
+var pStats = [];
+var orbitDist = sunRadius;
+var orbitPadding = 14;
+
+planets.forEach((item) => {
+	// orbit radius
+	let bodyRadius = getRadius(item.radius, baseRadius);
+	orbitDist += orbitPadding;
+	orbitDist += bodyRadius;
+
+	// construct orbit
+	var bodyOrbit = two.makeCircle(0, 0, orbitDist);
+	bodyOrbit.noFill();
+	bodyOrbit.linewidth = 2;
+	bodyOrbit.stroke = "#aaaaaa";
+	gOrbits.add(bodyOrbit);
+
+	// construct body
+	let body = {
+		'name': item.name,
+		'radius': bodyRadius,
+		'distance': orbitDist,
+		'orbit': item.orbit
+	};
+	let pos = getPosition(0, body.distance);
+	let planet = two.makeCircle(pos.x, pos.y, body.radius);
+	body['object'] = planet;
+	pStats.push(body);
+	gPlanets.add(planet);
+
+	orbitDist += bodyRadius;
+});
+
+// sun
+gSystem.add(gOrbits);
+gSystem.add(gPlanets);
+gSystem.add(sun);
+
 two.bind("update", (frameCount) => {
-	// position earth
-	let earthPos = getPosition(getAngle(365, frameCount), earthOrbitRadius);
-	earth.translation.x = earthPos.x;
-	earth.translation.y = earthPos.y;
-
-	// position luna
-	let moonPos = getPosition(getAngle(27, frameCount), earthRadius + distance);
-	moon.translation.x = earth.translation.x + moonPos.x;
-	moon.translation.y = earth.translation.y + moonPos.y;
-
-	// match orbits
-	moonOrbit.translation.x = earth.translation.x;
-	moonOrbit.translation.y = earth.translation.y;
+	// update bodies
+	pStats.forEach((body) => {
+		//let orbitDuration = body.orbit * 365;
+		let orbitDuration = getOrbit(body.orbit, baseOrbit);
+		let bodyPos = getPosition(getAngle(orbitDuration, frameCount), body.distance);
+		body.object.translation.x = bodyPos.x;
+		body.object.translation.y = bodyPos.y;
+	});
 });
 two.bind('resize', () => {
-	system.translation.x = two.width / 2;
-	system.translation.y = two.height / 2;
+	gSystem.translation.x = two.width / 2;
+	gSystem.translation.y = two.height / 2;
 })
 
+gOrbits.visible = true;
+gSystem.translation.set(center.x, center.y);
 
-system.add(orbits);
-system.add(planets);
-system.translation.set(center.x, center.y);
+// render first frame;
+two.update();
+
+// post render hooks
+sun._renderer.elem.id = 'sun';
+pStats.forEach((body) =>{
+	body.object._renderer.elem.id = body.name;
+});
+
+// add listener
+function clickTest(el) {
+	console.log('something clicked: ' + JSON.stringify(el, null, "\t"));
+};
+sun._renderer.elem.addEventListener('click', clickTest, false);
 
 // play animation loop
 two.play();
-//two.update();
-sun._renderer.elem.id = 'sun';
-earth._renderer.elem.id = 'earth';
-moon._renderer.elem.id = 'luna';
