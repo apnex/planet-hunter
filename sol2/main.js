@@ -21,7 +21,7 @@ var gLinks = two.makeGroup();
 function getAngle(seconds, frameCount) {
 	let frameTotal = 60 * seconds;
 	let frameCurrent = frameCount % frameTotal;
-	return (360 / frameTotal) * frameCurrent;
+	return (360 / frameTotal) * frameCurrent * -1; // -1 to reverse direction
 }
 
 // calc position on orbit
@@ -33,7 +33,7 @@ function getPosition(angle, orbit) {
 }
 
 // scale down body radius as a square root against smallest body
-function getRadius(radius, baseRadius, scale = 4) {
+function getRadius(radius, baseRadius, scale = 6) {
 	return Math.sqrt(radius / baseRadius) * scale;
 }
 
@@ -66,6 +66,7 @@ var pIndex = {};
 var orbitDist = sunRadius;
 var orbitPadding = 14;
 
+// initial render // move entirely to update hook?
 planets.forEach((item) => {
 	// orbit radius
 	let bodyRadius = getRadius(item.radius, baseRadius);
@@ -106,6 +107,13 @@ var drawingEvents = [];
 var pLinks = {};
 var drawOnce = 1;
 two.bind("update", (frameCount) => {
+
+	// get /bodies
+	// forEach body { // hard sync to API
+	//	body.object.translation.x = bodyPos.x;
+	//	body.object.translation.y = bodyPos.y;
+	// }
+
 	// update bodies
 	pStats.forEach((body) => {
 		let orbitDuration = getOrbit(body.orbit, baseOrbit);
@@ -165,8 +173,6 @@ two.update();
 
 // post render hooks
 function clickTest(name) {
-	console.log('something clicked: ' + name);
-
 	// create and register event
 	drawingEvents.push({
 		src: 'earth',
