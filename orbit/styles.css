@@ -1,0 +1,11 @@
+#planet {
+  position: absolute;
+  top: 25vh;
+  left: 25vw;
+  animation: orbit 4s linear infinite; /* Chrome, Firefox 16+, IE 10+, Safari 5 */
+}
+
+@keyframes orbit {
+  from { 	transform: rotate(0deg) translateX(100px) rotate(0deg); }
+  to   {  transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+}

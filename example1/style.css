@@ -1,0 +1,26 @@
+#vertical-rectangle {
+	fill: #0a2ca4;
+}
+
+#horizontal-rectangle {
+	fill: #4a8af4;
+	stroke: #ff0000;
+	stroke-width: 4;
+	stroke-dasharray: 10;
+}
+
+#mypath {
+	fill: #4a8af4;
+	stroke: #ff0000;
+	stroke-width: 4;
+	stroke-dasharray: 10;
+	stroke-dashoffset: 500;
+	animation: keyframes_draw 2000ms ease-in-out 0ms forwards;
+	animation-delay: 1s;
+}
+
+@keyframes keyframes_draw {
+	100% {
+		stroke-dashoffset: 0;
+	}
+}

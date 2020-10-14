@@ -241,8 +241,9 @@ getPlanets().then((data) => {
 	// render first frame;
 	two.update();
 
-	console.log(gOrbits);
+	//console.log(gOrbits);
 
+	/*
 	//sun._renderer.elem.id = 'sun';
 	pStats.forEach((body) =>{
 		body.object._renderer.elem.id = body.name;
@@ -250,7 +251,7 @@ getPlanets().then((data) => {
 			clickTest(body.name);
 		}, false);
 	});
-
+	*/
 	// play animation loop
-	two.play();
+	//two.play();
 });
