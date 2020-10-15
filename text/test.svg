@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="300" viewBox="0 0 980 300">
+	<style type="text/css"><![CDATA[
+		#group {
+			transform: translate(80px, 100px);
+		}
+		.font {
+			font-family: "Courier New", Courier, monospace;
+			font-size: 16px;
+		}
+		#vcenter {
+			stroke: #ffb74d;
+			stroke-width: 2;
+			fill: #ff9800;
+		}
+		#esx {
+			stroke: #81d4fa;
+			stroke-width: 2;
+			fill: #03a9f4;
+		}
+		#vsan {
+			stroke: #fff59d;
+			stroke-width: 2;
+			fill: #ffeb3b;
+		}
+		#nsx {
+			stroke: #c5e1a5;
+			stroke-width: 2;
+			fill: #8bc34a;
+		}
+	]]></style>
+	<rect x="0" y="0" width="980" height="300" rx="15" fill="#101010"/>
+	<g id="group">
+		<g transform="translate(0,0)">
+			<rect width="120" height="80" rx="3" id="vcenter"></rect>
+			<text class="font" x="60" y="40" alignment-baseline="middle" text-anchor="middle">vcenter</text>
+		</g>
+		<g transform="translate(140,0)">
+			<rect width="120" height="80" rx="3" id="esx"></rect>
+			<text class="font" x="60" y="40" alignment-baseline="middle" text-anchor="middle">esx01</text>
+		</g>
+		<g transform="translate(280,0)">
+			<rect width="120" height="80" rx="3" id="esx"></rect>
+			<text class="font" x="60" y="40" alignment-baseline="middle" text-anchor="middle">esx02</text>
+		</g>
+		<g transform="translate(420,0)">
+			<rect width="120" height="80" rx="3" id="esx"></rect>
+			<text class="font" x="60" y="40" alignment-baseline="middle" text-anchor="middle">esx03</text>
+		</g>
+		<g transform="translate(560,0)">
+			<rect width="120" height="80" rx="3" id="esx"></rect>
+			<text class="font" x="60" y="40" alignment-baseline="middle" text-anchor="middle">esx04</text>
+		</g>
+		<g transform="translate(700,0)">
+			<rect width="120" height="80" rx="3" id="nsx"></rect>
+			<text class="font" x="60" y="40" alignment-baseline="middle" text-anchor="middle">nsx-manager</text>
+		</g>
+		<g transform="translate(140,-50)">
+			<rect width="400" height="30" rx="3" id="vsan"></rect>
+			<text class="font" x="200" y="15" alignment-baseline="middle" text-anchor="middle">vsan</text>
+		</g>
+		<g transform="translate(560,-50)">
+			<rect width="120" height="30" rx="3" id="vsan"></rect>
+			<text class="font" x="60" y="15" alignment-baseline="middle" text-anchor="middle">local</text>
+		</g>
+	</g>
+</svg>
+
